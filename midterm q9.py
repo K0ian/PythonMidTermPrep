@@ -9,7 +9,7 @@ def days_since_birthday(birthday):
     # Extract the birth year from the input string
     birth_year = int(birthday[-4:])  # The last 4 characters represent the year
 
-    # Set the current year manually (since no imports are allowed)
+    # Set the current year manually
     current_year = 2024
 
     # Calculate the number of whole years between birth and current year
