@@ -1,18 +1,45 @@
-import random
+def is_valid_url(url):
+    """
+    Checks if the given string is a valid URL.
 
-# Step 1: Generate a list of 10 random numbers between 1 and 100
-random_numbers = []
-for i in range(10):
-    random_numbers.append(random.randint(1, 100))
+    A valid URL must:
+    - Start with "http://" or "https://"
+    - Contain at least one "." after the protocol
+    - Have at least one character before and after the "."
 
-# Step 2: Modify the list based on given conditions
-for i in range(len(random_numbers)):
-    if random_numbers[i] > 50:
-        # Replace numbers greater than 50 with a random number between 20 and 30
-        random_numbers[i] = random.randint(20, 30)
-    elif random_numbers[i] < 50:
-        # Replace numbers lower than 50 with "XX", but keep 50 unchanged
-        random_numbers[i] = "XX"
+    :param url: The string to check
+    :return: True if it's a valid URL, otherwise False
+    """
+    # Check if URL starts with "http://" or "https://"
+    if url[:7] == "http://" or url[:8] == "https://":
+        # Remove the protocol part
+        no_protocol = url[7:] if url[:7] == "http://" else url[8:]
 
-# Step 3: Print the final list
-print(random_numbers)
+        # Check if there is at least one dot
+        if "." in no_protocol:
+            dot_index = no_protocol.find(".")  # Get position of first dot
+
+            # Ensure there is at least one character before and after the dot
+            if dot_index > 0 and dot_index < len(no_protocol) - 1:
+                return True
+
+    return False
+
+
+# Test cases
+test_urls = [
+    "https://example.com",  # Valid
+    "http://google.com",  # Valid
+    "https://sub.domain.org",  # Valid
+    "http://localhost",  # Invalid (No ".")
+    "http://googlecom",  # Invalid (No ".")
+    "google.com",  # Invalid (Missing "http://")
+    "ftp://example.com",  # Invalid (Wrong protocol)
+    "https://.com",  # Invalid (No domain before ".")
+    "https://example.",  # Invalid (No domain after ".")
+]
+
+# Run the function and print results
+validity_results = {url: is_valid_url(url) for url in test_urls}
+print(validity_results)
+
